@@ -1,0 +1,8 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+freopn("tsumugi.out","w",stdout);
+cout<<"NO"<<endl;
+return 0;
+}
