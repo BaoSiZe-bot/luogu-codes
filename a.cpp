@@ -638,3 +638,11 @@ namespace __int256
 		return tmp;
 	}
 } // namespace __int256
+using namespace __int256;
+BigInt a, b;
+int main()
+{
+    cin >> a >> b;
+    cout << a + b << endl << a - b << endl << a * b << endl << a / b << endl << a % b;
+    return 0;
+}
