@@ -41,7 +41,7 @@ inline int dijkstra(int s, int t)
 void add_edge()
 {
     for (int i = 0; i <= n; ++i)
-        for (int j = 1; j <= 20; ++j)
+        for (int j = 0; j <= 20; ++j)
             if ((i ^ (1 << j)) <= n)
                 add(i, i ^ (1 << j), c * (1 << j));
 }
