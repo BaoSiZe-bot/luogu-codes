@@ -18,6 +18,7 @@ inline int dijkstra(int s, int t)
     memset(dis, 0x3f, sizeof dis);
     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
     pq.push({0, s});
+    dis[s] = 0;
     while (!pq.empty())
     {
         int nw = pq.top().second;
@@ -25,14 +26,12 @@ inline int dijkstra(int s, int t)
         if (vis[nw])
             continue;
         vis[nw] = 1;
-        if (nw == t)
-            return dis[t];
         for (int i = ed[nw]; i; i = e[i].p)
         {
             int to = e[i].v;
-            if (dis[to] > dis[nw] + e[i].p)
+            if (dis[to] > dis[nw] + e[i].d)
             {
-                dis[to] = dis[nw] + e[i].p;
+                dis[to] = dis[nw] + e[i].d;
                 pq.push({dis[to], to});
             }
         }
