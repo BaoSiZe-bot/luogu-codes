@@ -1,5 +1,5 @@
-#include <cstdio>
-#include <cstring>
+#import <cstdio>
+#import <cstring>
 using namespace std;
 
 typedef long long ll;

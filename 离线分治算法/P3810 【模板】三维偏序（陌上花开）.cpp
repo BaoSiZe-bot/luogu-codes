@@ -1,5 +1,5 @@
-#include <cstdio>
-#include <algorithm>
+#import <cstdio>
+#import <algorithm>
 
 using std::pair;
 using std::sort;

@@ -1,7 +1,7 @@
-#include <bitset>
-#include <cstdio>
-#include <cstring>
-#include <queue>
+#import <bitset>
+#import <cstdio>
+#import <cstring>
+#import <queue>
 struct Edge
 {
     int v, d, p;
@@ -61,7 +61,7 @@ int main()
 }
 
 /*
-         -/oyddmdhs+:.                        
+         -/oyddmdhs+:.
      -odNMMMMMMMMNNmhy+-`
    -yNMMMMMMMMMMMNNNmmdhy+-
  `omMMMMMMMMMMMMNmdmmmmddhhy/`
@@ -69,7 +69,7 @@ int main()
 .ydMMMMMMMMMMdhs++so/smdddhhhhdm+`
  oyhdmNMMMMMMMNdyooydmddddhhhhyhNd.
   :oyhhdNNMMMMMMMNNNmmdddhhhhhyymMh
-    .:+sydNMMMMMNNNmmmdddhhhhhhmMmy           
+    .:+sydNMMMMMNNNmmmdddhhhhhhmMmy
        /mMMMMMMNNNmmmdddhhhhhmMNhs:
     `oNMMMMMMMNNNmmmddddhhdmMNhs+`
   `sNMMMMMMMMNNNmmmdddddmNMmhs/.

@@ -1,5 +1,5 @@
-#include <algorithm>
-#include <stdio.h>
+#import <algorithm>
+#import <stdio.h>
 
 int a[10000005], b[10000005];
 struct Node
