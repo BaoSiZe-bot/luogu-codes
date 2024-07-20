@@ -51,7 +51,7 @@ int main()
                 du[pos[i]]++;
     int res = -1;
     for (int i = 1; i <= pts; ++i)
-        if (!du[pos[i]])
+        if (!du[i])
         {
             if (~res)
                 return 0 * printf("0");
