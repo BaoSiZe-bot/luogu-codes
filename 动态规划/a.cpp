@@ -6,7 +6,7 @@ struct Edge
 {
     int v, d, p;
 } e[3000005];
-int dis[100005], ed[100005], cnt;
+int dis[100005], ed[100005], cnt, n, m, c;
 std::bitset<100005> vis;
 inline void add(int u, int v, int w)
 {
@@ -38,9 +38,14 @@ inline int dijkstra(int s, int t)
     }
     return dis[t];
 }
+void add_edge()
+{
+    for (int i = 0; i <= n; ++i)
+        for (int j = 1; j <= 20; ++j)
+            add(i, i ^ (1 << j), c * (1 << j));
+}
 int main()
 {
-    int n, m, c;
     scanf("%d%d%d", &n, &m, &c);
     for (int i = 1; i <= m; ++i)
     {
@@ -48,9 +53,7 @@ int main()
         scanf("%d%d%d", &u, &v, &w);
         add(u, v, w);
     }
-    for (int i = 0; i <= n; ++i)
-        for (int j = 1; j <= 20; ++j)
-            add(i, i ^ (1 << j), c * (1 << j));
+    add_edge();
     int s, t;
     scanf("%d%d", &s, &t);
     return printf("%d\n", dijkstra(s, t)) * 0;
