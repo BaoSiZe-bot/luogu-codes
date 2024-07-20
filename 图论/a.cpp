@@ -13,7 +13,7 @@ inline void add(int u, int v, int w)
     e[++cnt] = {v, w, ed[u]};
     ed[u] = cnt;
 }
-inline int dijkstra(int s, int t)
+inline int dij(int s, int t)
 {
     memset(dis, 0x3f, sizeof dis);
     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
@@ -57,7 +57,7 @@ int main()
     add_edge();
     int s, t;
     scanf("%d%d", &s, &t);
-    return printf("%d\n", dijkstra(s, t)) * 0;
+    return printf("%d\n", dij(s, t)) * 0;
 }
 
 /*
