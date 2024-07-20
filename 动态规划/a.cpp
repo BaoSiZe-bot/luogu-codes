@@ -42,7 +42,8 @@ void add_edge()
 {
     for (int i = 0; i <= n; ++i)
         for (int j = 1; j <= 20; ++j)
-            add(i, i ^ (1 << j), c * (1 << j));
+            if ((i ^ (1 << j)) <= n)
+                add(i, i ^ (1 << j), c * (1 << j));
 }
 int main()
 {
@@ -58,3 +59,24 @@ int main()
     scanf("%d%d", &s, &t);
     return printf("%d\n", dijkstra(s, t)) * 0;
 }
+
+/*
+         -/oyddmdhs+:.                        
+     -odNMMMMMMMMNNmhy+-`
+   -yNMMMMMMMMMMMNNNmmdhy+-
+ `omMMMMMMMMMMMMNmdmmmmddhhy/`
+ omMMMMMMMMMMMNhhyyyohmdddhhhdo`
+.ydMMMMMMMMMMdhs++so/smdddhhhhdm+`
+ oyhdmNMMMMMMMNdyooydmddddhhhhyhNd.
+  :oyhhdNNMMMMMMMNNNmmdddhhhhhyymMh
+    .:+sydNMMMMMNNNmmmdddhhhhhhmMmy           
+       /mMMMMMMNNNmmmdddhhhhhmMNhs:
+    `oNMMMMMMMNNNmmmddddhhdmMNhs+`
+  `sNMMMMMMMMNNNmmmdddddmNMmhs/.
+ /NMMMMMMMMNNNNmmmdddmNMNdso:`
++MMMMMMMNNNNNmmmmdmNMNdso/-
+yMMNNNNNNNmmmmmNNMmhs+/-`
+/hMMNNNNNNNNMNdhs++/-`
+`/ohdmmddhys+++/:.`
+  `-//////:--.
+*/
