@@ -1,12 +1,58 @@
+#include <bitset>
 #include <cstdio>
+#include <cstring>
+#include <queue>
 struct Edge
 {
     int v, d, p;
-};
+} e[3000005];
+int dis[100005], ed[100005], cnt;
+std::bitset<100005> vis;
+inline void add(int u, int v, int w)
+{
+    e[++cnt] = {v, w, ed[u]};
+    ed[u] = cnt;
+}
+inline int dijkstra(int s, int t)
+{
+    memset(dis, 0x3f, sizeof dis);
+    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
+    pq.push({0, s});
+    while (!pq.empty())
+    {
+        int nw = pq.top().second;
+        pq.pop();
+        if (vis[nw])
+            continue;
+        vis[nw] = 1;
+        if (nw == t)
+            return dis[t];
+        for (int i = ed[nw]; i; i = e[i].p)
+        {
+            int to = e[i].v;
+            if (dis[to] > dis[nw] + e[i].p)
+            {
+                dis[to] = dis[nw] + e[i].p;
+                pq.push({dis[to], to});
+            }
+        }
+    }
+    return dis[t];
+}
 int main()
 {
     int n, m, c;
     scanf("%d%d%d", &n, &m, &c);
-
-    return 0;
+    for (int i = 1; i <= m; ++i)
+    {
+        int u, v, w;
+        scanf("%d%d%d", &u, &v, &w);
+        add(u, v, w);
+    }
+    for (int i = 0; i <= n; ++i)
+        for (int j = 1; j <= 20; ++j)
+            add(i, i ^ (1 << j), c * (1 << j));
+    int s, t;
+    scanf("%d%d", &s, &t);
+    return printf("%d\n", dijkstra(s, t)) * 0;
 }
