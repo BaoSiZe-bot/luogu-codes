@@ -1,26 +1,30 @@
+#include <algorithm>
 #include <cstdio>
-#include <bits/stl_pair.h>
-struct Edge
+#include <cstring>
+using namespace std;
+const int N = 100005;
+struct GR
 {
-    int v, p;
-} e[500005], pe[500005];
-int a[500005], ed[500005], ep[500005], sp[500005], dp[500005], dfn[500005], low[500005], stk[500005], pos[500005], du[500005], cnt, top, gtm, pts, hd = 1, tl, pnt;  //global-time
-std::pair<int, int> q[500005];
-inline int min(int a, int b)
-{
-    return a < b ? a : b;
-}
-inline int max(int a, int b)
-{
-    return a < b ? b : a;
-}
+    struct Edge
+    {
+        int v, p;
+    } e[N];
+    int ed[N], cnt = 0;
+    inline void add(int u, int v)
+    {
+        e[++cnt] = {v, ed[u]};
+        ed[u] = cnt;
+    }
+} g, ge, gf;
+int dfn[N], low[N], stk[N], pos[N], ptc[N], rd[N], cd[N], q[4 * N], cnt, top, gtm, pts, n, m, hd, tl;  // global time
+int d1[N], d2[N];
 inline void tarjan(int x)
 {
     dfn[x] = low[x] = ++gtm;
     stk[++top] = x;
-    for (int i = ed[x]; i; i = e[i].p)
+    for (int i = g.ed[x]; i; i = g.e[i].p)
     {
-        int to = e[i].v;
+        int to = g.e[i].v;
         if (!dfn[to])
         {
             tarjan(to);
@@ -34,60 +38,98 @@ inline void tarjan(int x)
         ++pts;
         int t = 0;
         do
-           sp[pos[t = stk[top--]] = pts] += a[t];
+            ptc[pos[t = stk[top--]] = pts]++;
         while (t != x);
+    }
+}
+inline void topo(int rr[], int d[], const GR &gg)
+{
+    d[pos[1]] = ptc[pos[1]];
+    hd = 1;
+    tl = 0;
+    for (int i = 1; i <= pts; i++)
+        if (!rr[i])
+            q[++tl] = i;
+    while (hd <= tl)
+    {
+        int p = q[hd++];
+        // printf("p=%d,gg.ed[p]=%d.\n", p, gg.ed[p]);
+        for (int i = gg.ed[p]; i; i = gg.e[i].p)
+        {
+            int to = gg.e[i].v;
+            // printf("%d->%d,d:%d->", p, to, d[to]);
+            d[to] = max(d[to], d[p] + ptc[to]);
+            // printf("%d\n", d[to]);
+            --rr[to];
+            if (!rr[to])
+                q[++tl] = to;
+        }
     }
 }
 int main()
 {
-    int n, m;
     scanf("%d%d", &n, &m);
-    while(m--)
+    for (int i = 1; i <= m; ++i)
     {
-        int u, v;
-        scanf("%d%d", &u, &v);
-        e[++cnt] = {v, ed[u]};
-        ed[u] = cnt;
+        int x, y;
+        scanf("%d%d", &x, &y);
+        g.add(x, y);
     }
     for (int i = 1; i <= n; ++i)
-        scanf("%d", a + i);
-    int st, edc;
-    scanf("%d%d", &st, &edc);
-    tarjan(st);
+        if (!dfn[i])
+            tarjan(i);
     for (int i = 1; i <= n; ++i)
-    {
-        if (!pos[i])
-            continue;
-        for (int j = ed[i]; j; j = e[j].p)
-            if (pos[i] ^ pos[e[j].v])
-            {
-                du[pos[e[j].v]]++;
-                pe[++pnt] = {pos[e[j].v], ep[pos[i]]};
-                ep[pos[i]] = pnt;
-            }
-    }
-    for (int i = 1; i <= pts; ++i)
-        dp[i] = sp[i];
-    q[++tl] = {pos[st], sp[pos[st]]};
-    while (hd <= tl)
-    {
-        auto nw = q[hd++];
-        for (int i = ep[nw.first]; i; i = pe[i].p)
+        for (int j = g.ed[i]; j; j = g.e[j].p)
         {
-            int to = pe[i].v;
-            --du[to];
-            dp[to] = max(dp[to], nw.second + sp[to]);
-            if (!du[to])
-                q[++tl] = {to, dp[to]};
+            int to = g.e[j].v;
+            if (pos[i] ^ pos[to])
+            {
+                ge.add(pos[i], pos[to]);
+                gf.add(pos[to], pos[i]);
+                ++rd[pos[i]];
+                ++cd[pos[to]];
+            }
         }
-    }
-    int res = 0;
-    while (edc--)
-    {
-        int bar;
-        scanf("%d", &bar);
-        res = max(res, dp[pos[bar]]);
-    }
+    memset(d1, 0xef, sizeof d1);
+    memset(d2, 0xef, sizeof d2);
+    topo(rd, d1, gf);
+    topo(cd, d2, ge);
+    // for (int i = 1 ; i <= n; ++i)
+    //     printf("%d is in %d=%d, d1:%d,d2:%d\n", i, pos[i], ptc[pos[i]], d1[pos[i]], d2[pos[i]]);
+    int res = ptc[pos[1]];
+    for (int i = 1; i <= n; ++i)
+        for (int j = g.ed[i]; j; j = g.e[j].p)
+        {
+            int to = g.e[j].v;
+            if (pos[i] ^ pos[to])
+            {
+                // if (i == 3 && to == 5)
+                    // printf("%d %d %d %d\n", d1[pos[i]], d2[pos[to]], ptc[pos[1]], d1[pos[i]] + d2[pos[to]] - ptc[pos[1]]);
+                res = max(res, d2[pos[to]] + d1[pos[i]] - ptc[pos[1]]);
+            }
+        }
     printf("%d\n", res);
     return 0;
 }
+/*
+1 is in 3=1
+2 is in 2=3
+3 is in 5=1
+4 is in 2=3
+5 is in 1=1
+6 is in 4=1
+7 is in 2=3
+1
+*/
+
+
+/*
+1 is in 3=1, d1:1, d2:1
+2 is in 2=3, d1:-269488145, d2:-269488145
+3 is in 5=1, d1:-269488145, d2:-269488145
+4 is in 2=3, d1:-269488145, d2:-269488145
+5 is in 1=1, d1:-269488145, d2:-269488145
+6 is in 4=1, d1:-269488145, d2:-269488145
+7 is in 2=3, d1:-269488145, d2:-269488145
+1
+*/
