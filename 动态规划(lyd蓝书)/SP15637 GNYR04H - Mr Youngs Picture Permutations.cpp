@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <cstdio>
 #include <cstring>
 #define int long long
 
