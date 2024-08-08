@@ -1,7 +1,7 @@
 #include <limits.h>
 #include <stdio.h>
 using dl = double;
-int x, y, n;
+int x, y, a;
 dl min(dl a, dl b)
 {
     return a < b ? a : b;
@@ -25,7 +25,7 @@ dl dfs(dl x, dl y, int k)
 }
 int main()
 {
-    scanf("%d%d%d", &x, &y, &n);
-    printf("%.6lf", dfs(x, y, n));
+    scanf("%d%d%d", &x, &y, &a);
+    printf("%.6lf", dfs(x, y, a));
     return 0;
 }
