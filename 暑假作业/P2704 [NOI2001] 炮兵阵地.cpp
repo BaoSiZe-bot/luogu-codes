@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <bits/stl_pair.h>
 #define fi first
 #define se second
@@ -59,7 +58,5 @@ int main()
         return 0;
     }
     std::cout << res;
-    std::vector<int> vct;
-    int t = vct.at(1145);
     return 0;
 }
