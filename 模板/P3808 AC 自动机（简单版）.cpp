@@ -50,6 +50,6 @@ int main()
             vis[t] = true;
         }
     }
-    printf("%d\n", res);
+    std::cout << res;
     return 0;
 }

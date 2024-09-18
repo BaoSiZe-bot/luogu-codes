@@ -1,37 +1,34 @@
-#include <bits/extc++.h>
-using __gnu_pbds::gp_hash_table;
-using std::cin;
-using std::cout;
-using std::string;
-using std::vector;
-
-int s[155][26], fl[155], q[155], nct, hd, tl;
-vector<string> cnt[155];
-string t;
-bool vis[155];
-
+#include <string>
+#include <vector>
+#include <iostream>
+#include <cstring>
+#include <ext/pb_ds/hash_policy.hpp>
+#include <ext/pb_ds/assoc_container.hpp>
+int s[50005][26], fl[50005], q[50005], nct, hd, tl;
+std::vector<std::string> cnt[50005];
+std::string ss[155];
 int main()
 {
     std::ios::sync_with_stdio(false);
-    cin.tie(0);
-    int Q;
-    cin >> Q;
-    while (Q--)
+    std::cin.tie(0);
+    int n;
+    while (std::cin >> n, n)
     {
         memset(s, 0, sizeof s);
         memset(fl, 0, sizeof fl);
-        memset(vis, 0, sizeof vis);
+        memset(q, 0, sizeof q);
+        for (int i = 0; i <= nct; i++)
+            cnt[i].clear();
         nct = 0;
-        int n;
-        cin >> n;
+        std::string t;
+        __gnu_pbds::gp_hash_table<std::string, int> mp;
         for (int i = 1; i <= n; i++)
         {
-            cin >> t;
+            std::cin >> ss[i];
             int now = 0;
-            for (auto i : t)
+            for (auto i : ss[i])
                 now = (!s[now][i - 'a'] && (s[now][i - 'a'] = ++nct), s[now][i - 'a']);
-            cnt[now].clear();
-            cnt[now].push_back(t);
+            cnt[now].push_back(ss[i]);
         }
         hd = 1;
         tl = 0;
@@ -53,26 +50,22 @@ int main()
                 else
                     s[u][i] = s[fl[u]][i];
         }
-        cin >> t;
+        std::cin >> t;
         int now = 0;
-        gp_hash_table<string, int> mp;
         for (auto i : t)
         {
             now = s[now][i - 'a'];
-            for (int t = now; t && !vis[t]; t = fl[t])
-            {
+            for (int t = now; t; t = fl[t])
                 for (const auto &j : cnt[t])
                     mp[j]++;
-                vis[t] = true;
-            }
         }
         int res = 0;
         for (const auto &i : mp)
             res = std::max(res, i.second);
-        cout << res << '\n';
-        for (const auto &i : mp)
-            if (i.second == res)
-                cout << i.first << '\n';
+        std::cout << res << '\n';
+        for (int i = 1; i <= n; ++i)
+            if (mp[ss[i]] == res)
+                std::cout << ss[i] << '\n';
     }
     return 0;
 }
