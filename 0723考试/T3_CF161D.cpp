@@ -15,7 +15,6 @@ void add(int u, int v)
     e[++cnt] = {v, ed[u]};
     ed[u] = cnt;
 }
-//TODO: the tree style dp
 inline void dfs(int x, int f)
 {
     dp[x][0] = 1;
