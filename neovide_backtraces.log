@@ -1,0 +1,28 @@
+2024-09-20 06:26:37 - Neovide panicked with the message 'called `Option::unwrap()` on a `None` value'. (File: src\window\mouse_manager.rs; Line: 171, Column: 64)
+   0: <unknown>
+   1: <unknown>
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: <unknown>
+   7: <unknown>
+   8: <unknown>
+   9: <unknown>
+  10: <unknown>
+  11: <unknown>
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: <unknown>
+  16: <unknown>
+  17: CallWindowProcW
+  18: DispatchMessageW
+  19: <unknown>
+  20: <unknown>
+  21: <unknown>
+  22: <unknown>
+  23: <unknown>
+  24: BaseThreadInitThunk
+  25: RtlUserThreadStart
+
