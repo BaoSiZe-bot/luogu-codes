@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 using ll = long long;
-const int M = 1e9 + 7;
-
+const int M = 1e9;
 char s[305];
 ll dp[305][305];
 
