@@ -1,0 +1,4 @@
+ab 2
+acb 4
+acb 1
+acb 1
