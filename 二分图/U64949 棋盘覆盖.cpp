@@ -1,7 +1,7 @@
 #include <cstring>
 #include <stdio.h>
 using ll = long long;
-int md[205], vs[205], n, m;
+int md[100005], vs[100005], n, m;
 bool mp[205][205];
 int d[4][2] = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
 int cr(int a, int b)
@@ -50,16 +50,16 @@ int main()
                 for (int p = 0; p < 4; ++p)
                 {
                     int k = i + d[p][0], l = j + d[p][1];
-                    if (k < 1 || l < 1 || k > n || l > n || mp[k][l])
-                        continue;
-                    add(cr(i, j), cr(k, l));
-                    printf("%d %d\n", cr(i, j), cr(k, l));
+                    if (k >= 1 && l >= 1 && k <= n && l <= n && !mp[k][l])
+                        add(cr(i, j), cr(k, l));
                 }
     int res = 0;
-    for (int i = 1; i <= n * n; ++i)
-    {
-        memset(vs, 0, sizeof vs);
-        res += Hungarian(res);
-    }
-    return 0 * printf("%d", res);
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= n; ++j)
+            if ((i + j) & 1)
+            {
+                memset(vs, 0, sizeof vs);
+                res += Hungarian(cr(i, j));
+            }
+    return 0 * printf("%d\n", res);
 }
