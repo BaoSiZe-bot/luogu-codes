@@ -1,3 +1,4 @@
 .clang-format
 .ccls-cache
 .editorconfig
+.dir-locals.el
