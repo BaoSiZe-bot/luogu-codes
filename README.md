@@ -2,8 +2,8 @@
 
 ## Overview
 
-My codes from Luogu, just them.  
-I'm very lazy so I want not sync old code from Luogu.  
+My codes from Luogu, just them.
+I'm very lazy so I want not sync old code from Luogu.
 Written by Windows, Gentoo/WSL2, Neovim, LazyVim.
 
 > This repository is for learning reference only
