@@ -1,65 +1,43 @@
+#include <algorithm>
 #include <stdio.h>
-using ll = long long;
-const int N = 1e6 + 5, M = 2.5e7 + 5;
-ll a[N];
-int p[N], tot;
-struct Edge
+const int N = 1e6 + 5;
+long long a[N];
+int p[N], h[N], b[64], c[64], n, i, res;
+inline int fd(int x)
 {
-    int v, p;
-} e[M];
-int ed[N], cnt;
-inline void add(int u, int v)
-{
-    e[++cnt] = {v, ed[u]};
-    ed[u] = cnt;
+    while (p[x] ^ x)
+        x = p[x] = p[p[x]];
+    return x;
 }
-inline ll max(ll a, ll b)
+inline void mg(int x, int y)
 {
-    return a < b ? b : a;
-}
-void dfs(int x)
-{
-    p[x] = tot;
-    for (int i = ed[x]; i; i = e[i].p)
-        if (!p[e[i].v])
-            dfs(e[i].v);
+    int fx = fd(x), fy = fd(y);
+    if (fx ^ fy)
+    {
+        h[fx] < h[fy] ? p[fx] = fy : p[fy] = fx;
+        if (h[fx] == h[fy])
+            h[fx]++;
+    }
 }
 int main()
 {
-    int n;
-    bool f = 1, g = 1;
     scanf("%d", &n);
-    for (int i = 1; i <= n; ++i)
+    for (i = 1; i <= n; ++i)
     {
         scanf("%lld", a + i);
-        if ((a[i] & -a[i]) ^ a[i])
-            f = 0;
-        if (a[i] ^ a[i - 1])
-            g = 0;
+        p[i] = i;
     }
-    if (g)
-        return 0 * printf("0");
-    if (f)
-        return 0 * printf("1");
-    if (n <= 1000)
+    std::sort(a + 1, a + 1 + n);
+    for (i = 1; i <= n; ++i)
     {
-        for (int i = 1; i <= n; ++i)
-            for (int j = i + 1; j <= n; ++j)
-                if ((a[i] ^ a[j]) > max(a[i], a[j]))
-                {
-                    add(i, j);
-                    add(j, i);
-                }
-        for (int i = 1; i <= n; ++i)
-        {
-            if (!p[i])
-            {
-                ++tot;
-                dfs(i);
-            }
-        }
-        printf("%d\n", tot);
-        return 0;
+        for (int j = 63 - __builtin_clzll(a[i]); ~j; --j)
+            !(a[i] >> j & 1) && b[j] && (c[j] ? (mg(i, c[j]), 0) : c[j] = fd(i));
+        ++b[63 - __builtin_clzll(a[i])];
     }
+    for (i = 1; i <= n; ++i)
+        c[63 - __builtin_clzll(a[i])] && (mg(i, c[63 - __builtin_clzll(a[i])]), 0);
+    for (i = 1; i <= n; ++i)
+        res += fd(i) == i;
+    printf("%d", res);
     return 0;
 }
