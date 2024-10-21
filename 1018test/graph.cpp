@@ -2,6 +2,7 @@
 #include <stdio.h>
 const int N = 1e6 + 5;
 long long a[N];
+
 int p[N], h[N], b[64], c[64], n, i, res;
 inline int fd(int x)
 {
