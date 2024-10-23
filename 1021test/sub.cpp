@@ -64,20 +64,15 @@ int main()
     while (q--)
     {
         scanf("%lld%lld", &l, &r);
-        if (r - l <= 2)
-        {
-            printf("%lld\n", qp(3, s[r][0] - s[l - 1][0]));
-            continue;
-        }
-        if (r - l == 3)
+        if (r - l <= 3)
         {
             res = 0;
             dfs(l);
             printf("%lld\n", res);
             continue;
         }
-        int p = s[r][0] - s[l - 1][0];
-        int q = (s[r][1] == s[l - 1][1]);
+        ll p = s[r][0] - s[l - 1][0];
+        ll q = (s[r][1] == s[l - 1][1]);
         q += (s[r][2] == s[l - 1][2]);
         q += (s[r][3] == s[l - 1][3]);
         if (!q)
