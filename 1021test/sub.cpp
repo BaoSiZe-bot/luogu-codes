@@ -11,7 +11,7 @@ __always_inline bool chk()
     if (!bk[1] || !bk[2] || !bk[3])
         return 1;
     for (int i = l; i <= r; ++i)
-        for (int j = i + 1; j <= r; ++j)
+        for (int j = i + 1; j <= r; ++j
             for (int k = j + 1; k <= r; ++k)
                 if (i + 1 != j || j + 1 != k)
                     if (a[i] * a[j] * a[k] == 6)

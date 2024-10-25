@@ -14,8 +14,6 @@ inline int gcd(int a, int b)
 }
 int main()
 {
-    freopen("gcd.in", "r", stdin);
-    freopen("gcd.out", "w", stdout);
     int n, q;
     scanf("%d%d", &n, &q);
     while (q--)
