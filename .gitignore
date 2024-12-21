@@ -2,3 +2,5 @@
 .ccls-cache
 .editorconfig
 .dir-locals.el
+.aider*
+.env
