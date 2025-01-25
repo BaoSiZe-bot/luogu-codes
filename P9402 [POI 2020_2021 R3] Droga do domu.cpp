@@ -98,18 +98,3 @@ signed main()
         printf("%lld\n", res);
     return 0;
 }
-            int to = e[j].v;
-            if (to)
-                f[to][i] = std::min(f[to][i], calc(j, p[j], f[j][i]));
-        }
-    }
-    ll res = 0x3fffffffffffffff;
-    for (int i = ed[n]; i; i = e2[i].p)  
-        for (int j = 0; j <= k; ++j)
-            res = std::min(res, f[e2[i].v][j]);
-    if (res >= 0x2fffffffffffffff)
-        printf("NIE");
-    else
-        printf("%lld\n", res);
-    return 0;
-}
