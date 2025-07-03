@@ -4,3 +4,4 @@
 .dir-locals.el
 .aider*
 .env
+*.exe
