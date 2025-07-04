@@ -6,7 +6,7 @@ using std::min;
 using ll = long long;
 
 const ll INF = 1e18;
-const int N = 5005, M = 50005;
+const int N = 1e5 + 5, M = 5e5 + 5;
 
 ll fl[N];
 struct Edge
@@ -21,7 +21,7 @@ inline void add(int u, int v, ll c)
 {
     e[cnt] = {c, v, ed[u]};
     ed[u] = cnt++;
-    e[cnt] = {c, u, ed[v]};
+    e[cnt] = {0, u, ed[v]};
     ed[v] = cnt++;
 }
 
