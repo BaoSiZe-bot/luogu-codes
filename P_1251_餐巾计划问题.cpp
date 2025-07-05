@@ -17,7 +17,7 @@ struct Edge
 } e[M << 1];
 int n, m, s, t, cnt;
 int ed[N], q[N], cur[N];
-int x[N], y[N], a[N], b[N], v[N];
+int x[N], y[N], a[N], b[N], vis[N];
 inline void add(int u, int v, ll c, ll w)
 {
     e[cnt] = {c, w, v, ed[u]};
@@ -28,7 +28,7 @@ inline void add(int u, int v, ll c, ll w)
 
 inline bool spfa()
 {
-    memset(v, 0, sizeof(v));
+    memset(vis, 0, sizeof(vis));
     memset(dis, 0x3f, sizeof(dis));
     memcpy(cur, ed, sizeof(ed));
 
@@ -38,16 +38,16 @@ inline bool spfa()
     while (hd <= tl)
     {
         int nw = q[hd++];
-        v[nw] = false;
+        vis[nw] = false;
         for (int i = ed[nw]; ~i; i = e[i].p)
         {
             int to = e[i].v;
             if (e[i].w && dis[to] > dis[nw] + e[i].c)
             {
                 dis[to] = dis[nw] + e[i].c;
-                if (!v[to])
+                if (!vis[to])
                 {
-                    v[to] = true;
+                    vis[to] = true;
                     q[++tl] = to;
                 }
             }
@@ -61,12 +61,12 @@ inline ll dfs(int x, ll lim)
 {
     if (x == t)
         return lim;
-    v[x] = true;
+    vis[x] = true;
     ll sf = 0;
     for (int &i = cur[x]; ~i; i = e[i].p)
     {
         int to = e[i].v, pf;
-        if (!v[to] && dis[to] == dis[x] + e[i].c && e[i].w > 0 && (pf = dfs(to, min(lim - sf, e[i].w))))
+        if (!vis[to] && dis[to] == dis[x] + e[i].c && e[i].w > 0 && (pf = dfs(to, min(lim - sf, e[i].w))))
         {
             cost += e[i].c * pf;
             e[i].w -= pf;
@@ -74,7 +74,7 @@ inline ll dfs(int x, ll lim)
             sf += pf;
         }
     }
-    v[x] = false;
+    vis[x] = false;
     return sf;
 }
 
