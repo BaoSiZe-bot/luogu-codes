@@ -4,32 +4,32 @@ struct Edge
 {
     int v, w, p;
 } e[20005];
-int ed[1005], q[500005], d[1005], cnt, hd, tl, n, p, k;
+int ed[1005], q[500005], dis[1005], cnt, hd, tl, n, p, k;
 inline bool bfs(int mid)
 {
-    memset(d, 0x3f, sizeof d);
+    memset(dis, 0x3f, sizeof dis);
     q[hd = tl = 250000] = 1;
-    d[1] = 0;
+    dis[1] = 0;
     while (hd <= tl)
     {
         int nw = q[hd++];
         if (nw == n)
-            return d[n] <= k;
+            return dis[n] <= k;
         for (int i = ed[nw]; i; i = e[i].p)
         {
             int to = e[i].v, w = e[i].w;
             if (w <= mid)
             {
-                if (d[nw] >= d[to])
+                if (dis[nw] >= dis[to])
                     continue;
-                d[to] = d[nw];
+                dis[to] = dis[nw];
                 q[--hd] = to;
             }
             else
             {
-                if (d[nw] + 1 >= d[to])
+                if (dis[nw] + 1 >= dis[to])
                     continue;
-                d[to] = d[nw] + 1;
+                dis[to] = dis[nw] + 1;
                 q[++tl] = to;
             }
         }
