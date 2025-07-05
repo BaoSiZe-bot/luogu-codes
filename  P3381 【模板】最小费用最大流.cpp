@@ -1,85 +1,88 @@
-#include <algorithm>
-#include <cstdio>
-#include <cstring>
+#include <stdio.h>
+#include <string.h>
 
-using std::min;
-using ll = long long;
+const long long INF = 0x3f3f3f3f3f3f3f3f;
+#define N 505
+#define M 100005
 
-const ll INF = 1e18;
-const int N = 1e4 + 5, M = 1e5 + 5;
-
-ll cost;
 int n, m, s, t, cnt;
 
+long long min(long long a, long long b)
+{
+    return a < b ? a : b;
+}
 int ed[N];
 struct Edge
 {
-    ll w, c;
+    long long w;
     int v, p;
 } e[M << 1];
-inline void add(int u, int v, ll w, ll c)
+void add(int u, int v, long long w)
 {
-    e[cnt] = {w, c, v, ed[u]};
+    e[cnt].w = w;
+    e[cnt].v = v;
+    e[cnt].p = ed[u];
     ed[u] = cnt++;
 }
 
-ll fl[N], d[N];
-int q[N << 8], v[N], cur[N];
-inline bool spfa()
+int lev[N];
+int q[N << 8], vis[N], cur[N];
+int spfa()
 {
-    memset(v, 0, sizeof(v));
-    memset(d, 0x3f, sizeof(d));
-    memcpy(cur, ed, sizeof(ed));
+    memset(vis + 1, 0, sizeof(int) * n);
+    memset(lev + 1, 0xff, sizeof(int) * n);
+    memcpy(cur + 1, ed + 1, sizeof(int) * n);
 
     int hd = 1, tl = 0;
-    d[q[++tl] = s] = 0;
+
+    lev[s] = 0;
+    q[++tl] = s;
 
     while (hd <= tl)
     {
-        int nw = q[hd++];
-        v[nw] = false;
-        for (int i = ed[nw]; ~i; i = e[i].p)
+        int u = q[hd++];
+
+        for (int i = ed[u]; ~i; i = e[i].p)
         {
             int to = e[i].v;
-            if (e[i].w > 0 && d[to] > d[nw] + e[i].c)
+            if (e[i].w > 0 && lev[to] == -1)
             {
-                d[to] = d[nw] + e[i].c;
-                if (!v[to])
-                {
-                    v[to] = true;
-                    q[++tl] = to;
-                }
+                lev[to] = lev[u] + 1;
+                q[++tl] = to;
             }
         }
     }
 
-    return d[t] < INF;
+    return lev[t] != -1;
 }
 
-inline ll dfs(int x, ll lim)
+long long dfs(int x, long long lim)
 {
     if (x == t)
         return lim;
-    v[x] = true;
-    ll sf = 0;
-    for (int &i = cur[x]; ~i; i = e[i].p)
+    vis[x] = 1;
+    long long sf = 0;
+    for (int i = cur[x]; lim > 0 && ~i; cur[x] = i = e[i].p)
     {
-        int to = e[i].v, pf;
-        if (!v[to] && d[to] == d[x] + e[i].c && e[i].w > 0 && (pf = dfs(to, min(lim - sf, e[i].w))))
+        int to = e[i].v;
+        long long pf;
+        if (!vis[to] && lev[to] == lev[x] + 1 && e[i].w > 0 && (pf = dfs(to, min(lim - sf, e[i].w))))
         {
-            cost += e[i].c * pf;
             e[i].w -= pf;
             e[i ^ 1].w += pf;
             sf += pf;
+            lim -= pf;
+            if (lim <= 0)
+                break;
         }
     }
-    v[x] = false;
+    vis[x] = 0;
     return sf;
 }
 
-inline ll dinic()
+long long dinic()
 {
-    ll fl = 0, pf;
+    long long fl = 0, pf;
     while (spfa())
         while ((pf = dfs(s, INF)))
             fl += pf;
@@ -88,18 +91,17 @@ inline ll dinic()
 
 int main()
 {
-    memset(ed, -1, sizeof(ed));
-
     scanf("%d%d%d%d", &n, &m, &s, &t);
+    memset(ed + 1, -1, sizeof(int) * n);
+
     for (int i = 1; i <= m; ++i)
     {
         int u, v;
-        ll w, c;
-        scanf("%d%d%lld%lld", &u, &v, &w, &c);
-        add(u, v, w, c);
-        add(v, u, 0, -c);
+        long long w;
+        scanf("%d%d%lld", &u, &v, &w);
+        add(u, v, w);
+        add(v, u, 0);
     }
-    ll res = dinic();
-    printf("%lld %lld\n", res, cost);
+    printf("%lld\n", dinic());
     return 0;
 }
