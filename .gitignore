@@ -1,3 +1,7 @@
+.vscode
+.fleet
+*.sublime-project
+*.sublime-workspace
 .clang-format
 .ccls-cache
 .editorconfig
