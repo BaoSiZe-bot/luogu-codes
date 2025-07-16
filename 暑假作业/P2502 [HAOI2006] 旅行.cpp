@@ -1,8 +1,7 @@
 #include <limits>
 #include <stdio.h>
 #include <string.h>
-#include <bits/stl_algobase.h>
-#include <bits/stl_algo.h>
+#include <algorithm>
 using dl = double;
 template <const int N> struct GR
 {
