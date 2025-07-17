@@ -3,6 +3,7 @@
 *.sublime-project
 *.sublime-workspace
 .clang-format
+.clangd
 .ccls-cache
 .editorconfig
 .dir-locals.el
