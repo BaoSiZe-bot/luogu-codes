@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <cstdio>
 
-const int ULE = -1; // 无效赋值
 const int N = 5e6 + 5, M = 4e5 + 5;
 
 struct Edge
